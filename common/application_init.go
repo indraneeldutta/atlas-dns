@@ -1,11 +1,12 @@
 package common
 
 import (
+	mongoservice "github.com/atlas-dns/services/mongo_service"
 	"github.com/spf13/viper"
 )
 
 func InitialiseApplication() {
-
+	mongoservice.NewMongoConnection()
 }
 
 // SetupEnvironment sets up the configs and environment for the application to start
