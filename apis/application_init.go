@@ -27,7 +27,7 @@ func InitialiseApplication() {
 
 	v1 := router.Group("/v1")
 
-	NewDnsController(v1, &dnsService)
+	NewDnsController(v1, dnsService)
 
 	router.Run(viper.GetString("SERVER_PORT"))
 }

@@ -1,3 +1,5 @@
+//go:generate mockgen -destination=$GOPATH/src/github.com/atlas-dns/tests/service/mock_service/dns.go -source=$GOPATH/src/github.com/atlas-dns/services/dns_service/dns.go
+
 package dnsservice
 
 import (
@@ -16,8 +18,12 @@ type DnsService struct {
 	collection *mongo.Collection
 }
 
-func NewDnsService(client *mongo.Client) DnsService {
-	return DnsService{
+type IDnsService interface {
+	GetDroneLoc(*common.Context, models.DroneRequest) (models.DroneResponse, error)
+}
+
+func NewDnsService(client *mongo.Client) *DnsService {
+	return &DnsService{
 		collection: client.Database(viper.GetString("MONGO.DB_NAME")).Collection("drones"),
 	}
 }

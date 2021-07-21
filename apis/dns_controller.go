@@ -16,16 +16,18 @@ const (
 
 // DndController ..
 type DnsController struct {
-	service *dnsservice.DnsService
+	service dnsservice.IDnsService
 }
 
 // NewDnsController initialises all the routes for Dns Services
-func NewDnsController(router *gin.RouterGroup, service *dnsservice.DnsService) {
+func NewDnsController(router *gin.RouterGroup, service dnsservice.IDnsService) *DnsController {
 	controller := DnsController{
 		service: service,
 	}
 
 	router.POST(GETLOC, controller.getDroneLoc)
+
+	return &controller
 }
 
 func (c *DnsController) getDroneLoc(ginCtx *gin.Context) {
