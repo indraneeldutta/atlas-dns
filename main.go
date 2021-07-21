@@ -1,9 +1,12 @@
 package main
 
-import "github.com/atlas-dns/common"
+import (
+	"github.com/atlas-dns/apis"
+	"github.com/atlas-dns/common"
+)
 
 func main() {
-	common.SetupEnvironment()
+	apis.SetupEnvironment()
 	common.SetUpLogging()
-	common.InitialiseApplication()
+	apis.InitialiseApplication()
 }
