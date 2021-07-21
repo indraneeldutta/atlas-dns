@@ -40,7 +40,7 @@ func SetupEnvironment() error {
 	}
 
 	viper.SetConfigName("config")
-	viper.AddConfigPath("./config/")
+	viper.AddConfigPath(viper.GetString("gopath") + "/src/github.com/atlas-dns/config/")
 	viper.SetConfigType("yml")
 
 	err = viper.ReadInConfig()
