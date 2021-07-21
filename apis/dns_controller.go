@@ -8,6 +8,7 @@ import (
 	"github.com/atlas-dns/models"
 	dnsservice "github.com/atlas-dns/services/dns_service"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 const (
@@ -37,8 +38,14 @@ func (c *DnsController) getDroneLoc(ginCtx *gin.Context) {
 	var request models.DroneRequest
 	if errors.Is(ginCtx.ShouldBindJSON(&request), nil) {
 		response, err := c.service.GetDroneLoc(context, request)
-		if !errors.Is(err, nil) {
+		if !errors.Is(err, nil) && !errors.Is(err, mongo.ErrNoDocuments) {
 			ginCtx.SecureJSON(http.StatusInternalServerError, gin.H{})
+			context.Logger.Error(err)
+			return
+		} else if errors.Is(err, mongo.ErrNoDocuments) {
+			ginCtx.SecureJSON(http.StatusInternalServerError, gin.H{
+				"error": "drone not found",
+			})
 			context.Logger.Error(err)
 			return
 		}
