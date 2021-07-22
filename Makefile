@@ -9,7 +9,3 @@ rm: stop
 
 stop:
 	-docker stop atlas-dns
-
-# run_test:
-# 	cd tests
-# 	go test ./... -v -coverpkg=./...
